@@ -23,12 +23,12 @@ export class ValidateSessionUseCase {
         ErrorMessages.REQUIRED_TOKEN,
         401,
         "Session token is required",
-        true
+        true,
       );
 
     const decodedToken = verify(
       sessionToken,
-      <string>config.JWT_SECRET
+      <string>config.JWT_SECRET,
     ) as DecodedToken;
 
     const session = await this.authRepository.findSessionByToken(sessionToken);
@@ -38,7 +38,7 @@ export class ValidateSessionUseCase {
         ErrorMessages.INVALID_SESSION,
         401,
         "Session is invalid",
-        true
+        true,
       );
 
     return decodedToken;
