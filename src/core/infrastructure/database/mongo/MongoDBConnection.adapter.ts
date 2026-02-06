@@ -34,14 +34,17 @@ export class MongoDBConnectionAdapter implements IDBConnection {
    */
   async connectToDatabase(): Promise<void> {
     try {
-      await connect(config.LOCAL_MONGO_DB_URI, {} as ConnectOptions);
+      await connect(config.LOCAL_MONGO_DB_URI, {
+        retryWrites: true,
+        w: "majority",
+      } as ConnectOptions);
       console.log("¡✅ Conexión a la base de datos realizada con éxito!");
     } catch (error: unknown) {
       throw new AppError(
         ErrorMessages.DATABASE_CONNECTION_ERROR,
         500,
         `❌ Ocurrió un error al conectar con la base de datos: ${error}`,
-        true
+        true,
       );
     }
   }
