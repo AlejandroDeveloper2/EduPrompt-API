@@ -12,4 +12,5 @@ export const config = {
   ADMIN_USER: process.env.ADMIN_USER || "",
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || "",
   OPEN_IA_API_KEY: process.env.OPEN_IA_API_KEY || "",
+  NODE_ENV: process.env.NODE_ENV || "development",
 };

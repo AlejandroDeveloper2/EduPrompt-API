@@ -74,7 +74,8 @@ class Server {
     const featureDirs = fs.readdirSync(featuresPath);
 
     for (const dir of featureDirs) {
-      const indexPath = path.join(featuresPath, dir, "index.ts");
+      const extension = config.NODE_ENV === "production" ? "js" : "ts";
+      const indexPath = path.join(featuresPath, dir, `index.${extension}`);
 
       // Verificar que exista el archivo index.ts (por si hay carpetas vacías)
       if (!fs.existsSync(indexPath)) continue;
@@ -86,7 +87,7 @@ class Server {
 
         // Busca un export que termine en 'Feature'
         const exportedFeature: Feature<unknown, unknown> = Object.values(
-          featureModule
+          featureModule,
         ).find((f: Feature<unknown, unknown>) => f?.featureName && f?.router);
 
         if (exportedFeature) {
@@ -97,7 +98,7 @@ class Server {
 
           this.server.use(`/api/v1/${featureName}`, router);
           console.log(
-            `✅ Feature '${featureName}' loaded at /api/v1/${featureName}`
+            `✅ Feature '${featureName}' loaded at /api/v1/${featureName}`,
           );
         }
       } catch (error) {
@@ -112,7 +113,8 @@ class Server {
     const featureDirs = fs.readdirSync(featuresPath);
 
     for (const dir of featureDirs) {
-      const socketPath = path.join(featuresPath, dir, `index.ts`);
+      const extension = config.NODE_ENV === "production" ? "js" : "ts";
+      const socketPath = path.join(featuresPath, dir, `index.${extension}`);
       if (!fs.existsSync(socketPath)) continue;
 
       try {
@@ -122,7 +124,7 @@ class Server {
 
         // Busca un export que tenga propiedad 'socket'
         const feature = Object.values(featureModule).find(
-          (f: Feature<unknown, unknown>) => f?.socket
+          (f: Feature<unknown, unknown>) => f?.socket,
         ) as { socket?: (io: IOServer) => void };
 
         if (feature?.socket && this.io) {
