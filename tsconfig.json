@@ -3,8 +3,8 @@
   "compilerOptions": {
     // File Layout
     "rootDir": "./src",
-    "baseUrl":  "./",
-    // "outDir": "./dist",
+    "baseUrl": "./",
+    "outDir": "./dist",
     "paths": {
       "@/*": ["src/*"]
     },
@@ -13,7 +13,7 @@
     "module": "commonjs",
     "target": "ES2022",
     "types": [],
-    "esModuleInterop": true,     
+    "esModuleInterop": true,
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -43,9 +43,11 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true,
-  }, 
+    "skipLibCheck": true
+  },
   "ts-node": {
     "require": ["tsconfig-paths/register"]
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
